@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "GlobalTicket.TicketManager/1.0.0": {
+        "runtime": {
+          "GlobalTicket.TicketManager.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GlobalTicket.TicketManager/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,14 @@
+C:\Users\Dominic\HandOnPractice\bin\Debug\net9.0\HandOnPractice.exe
+C:\Users\Dominic\HandOnPractice\bin\Debug\net9.0\HandOnPractice.deps.json
+C:\Users\Dominic\HandOnPractice\bin\Debug\net9.0\HandOnPractice.runtimeconfig.json
+C:\Users\Dominic\HandOnPractice\bin\Debug\net9.0\HandOnPractice.dll
+C:\Users\Dominic\HandOnPractice\bin\Debug\net9.0\HandOnPractice.pdb
+C:\Users\Dominic\HandOnPractice\obj\Debug\net9.0\HandOnPractice.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dominic\HandOnPractice\obj\Debug\net9.0\HandOnPractice.AssemblyInfoInputs.cache
+C:\Users\Dominic\HandOnPractice\obj\Debug\net9.0\HandOnPractice.AssemblyInfo.cs
+C:\Users\Dominic\HandOnPractice\obj\Debug\net9.0\HandOnPractice.csproj.CoreCompileInputs.cache
+C:\Users\Dominic\HandOnPractice\obj\Debug\net9.0\HandOnPractice.dll
+C:\Users\Dominic\HandOnPractice\obj\Debug\net9.0\refint\HandOnPractice.dll
+C:\Users\Dominic\HandOnPractice\obj\Debug\net9.0\HandOnPractice.pdb
+C:\Users\Dominic\HandOnPractice\obj\Debug\net9.0\HandOnPractice.genruntimeconfig.cache
+C:\Users\Dominic\HandOnPractice\obj\Debug\net9.0\ref\HandOnPractice.dll

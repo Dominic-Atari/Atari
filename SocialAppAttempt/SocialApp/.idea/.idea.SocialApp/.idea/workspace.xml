@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="27e46fdc-70b1-4471-8882-ff4549469386" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/ConsoleApp1.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/ConsoleApp1.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/Debug/net9.0/ConsoleApp1.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/Debug/net9.0/ConsoleApp1.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/Debug/net9.0/ConsoleApp1.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/Debug/net9.0/ConsoleApp1.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/Debug/net9.0/ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/Debug/net9.0/ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/Debug/net9.0/ConsoleApp1.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/Debug/net9.0/ConsoleApp1.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../BankingSystem/ConsoleApp1/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/Publisher/MessageEventArgs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/Publisher/MessageEventArgs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/Publisher/Publisher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/Publisher/Publisher.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/Publisher/Subscriber/Customers/Customer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/Publisher/Subscriber/Customers/Customer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/Publisher/Subscriber/Subscriber.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/Publisher/Subscriber/Subscriber.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/bin/Debug/net9.0/HandOnPractice.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/bin/Debug/net9.0/HandOnPractice.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/bin/Debug/net9.0/HandOnPractice.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/bin/Debug/net9.0/HandOnPractice.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/bin/Debug/net9.0/HandOnPractice.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/bin/Debug/net9.0/HandOnPractice.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/HandOnPractice.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/apphost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/ref/HandOnPractice.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/ref/HandOnPractice.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/refint/HandOnPractice.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/Debug/net9.0/refint/HandOnPractice.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/HandOnPractice.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/HandOnPractice.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Delegets and Events/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../Delegets and Events/obj/project.nuget.cache" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Dominic-Atari&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Dominic-Atari/CSharp_Projects.git&quot;,
+    &quot;accountId&quot;: &quot;3e1085e8-0131-4363-b8eb-cdf1d81cc5b9&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="3485T4qfQAZjl8KmBTAPbNH1igx" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="27e46fdc-70b1-4471-8882-ff4549469386" name="Changes" comment="" />
+      <created>1760582362551</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1760582362551</updated>
+      <workItem from="1760582363822" duration="276000" />
+      <workItem from="1760582768548" duration="207000" />
+      <workItem from="1760583166011" duration="151000" />
+      <workItem from="1760624789233" duration="66000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
