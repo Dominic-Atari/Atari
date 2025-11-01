@@ -93,7 +93,7 @@ namespace Nile
                 .IsUnique();
 
             modelBuilder.Entity<FriendRelationship>()
-                .HasCheckConstraint("CK_Friend_NoSelf", "RequesterUserId <> TargetUserId");
+                .ToTable(t => t.HasCheckConstraint("CK_Friend_NoSelf", "RequesterUserId <> TargetUserId"));
 
             // Optional: constrain status values if you use a string status field
             // modelBuilder.Entity<FriendRelationship>()

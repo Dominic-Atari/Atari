@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nile;
 
@@ -11,9 +12,11 @@ using Nile;
 namespace Nile.Migrations
 {
     [DbContext(typeof(NileDbContext))]
-    partial class NileDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251101013458_PostLikeAdded")]
+    partial class PostLikeAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
