@@ -1,16 +1,12 @@
-using System.Text.RegularExpressions;
+// Nile/Repository/IGroupRepository.cs
 using Nile.Entities;
 
 namespace Nile.Repository
 {
-    public interface IGroupRepository : IGenericRepository<GroupMember>
+    public interface IGroupRepository : IGenericRepository<Group>
     {
-        Task<bool> IsMemberAsync(Guid userId, Guid groupId);
-
-        Task AddMemberAsync(GroupMember member);
-
-        Task RemoveMemberAsync(Guid userId, Guid groupId);
-
-        Task<GroupMember?> GetMembershipAsync(Guid userId, Guid groupId);
+        Task<Group?> GetWithMembersAsync(Guid groupId);
+        Task<IReadOnlyList<Group>> GetOwnedByAsync(Guid ownerUserId);
+        Task<IReadOnlyList<Group>> SearchByNameAsync(string term, int take);
     }
 }

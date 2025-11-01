@@ -1,16 +1,7 @@
-/*Comment
-├─ CommentId (PK)
-├─ PostId    (FK -> Post)
-├─ UserId    (FK -> User)
-├─ ContentText
-├─ CreatedAt
-└─ ParentCommentId (nullable, FK -> Comment)  // for replies/threads
+// Nile.Entities/Comment.cs
+using System;
+using System.Collections.Generic;
 
-RELATIONS:
-Post (1) ── (many) Comment
-User (1) ── (many) Comment
-Comment (1) ── (many) Comment (replies)
-*/
 namespace Nile.Entities
 {
     public class Comment
@@ -23,11 +14,13 @@ namespace Nile.Entities
         public string ContentText { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
 
+        // NEW: threaded replies
+        public Guid? ParentCommentId { get; set; }
+        public Comment? ParentComment { get; set; }
+        public ICollection<Comment> Replies { get; set; } = new List<Comment>();
+
         // navs
         public Post Post { get; set; } = default!;
         public User User { get; set; } = default!;
-        // We'll add Posts under a Group later when we add GroupId to Post.
-        // public ICollection<Post> Posts { get; set; } = new List<Post>();
     }
 }
-

@@ -1,17 +1,19 @@
 using Nile;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add controllers (MVC API)
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
+// Controllers + JSON options
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(o =>
     {
-        // This tells System.Text.Json to ignore cycles
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        o.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     });
 
-// Add Swagger/OpenAPI support
+// Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -23,17 +25,30 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Pull in all Nile services, repos, and DbContext
+// CORS (must be BEFORE Build())
+var allowSpa = "_allowSpa";
+builder.Services.AddCors(o => o.AddPolicy(allowSpa, p =>
+    p.AllowAnyHeader()
+     .AllowAnyMethod()
+     .WithOrigins("http://localhost:4200", "http://localhost:5173")));
+
+// Pull in Nile registrations (DbContext, repos, services, etc.)
 builder.Services.AddNile(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure Swagger middleware
+// Swagger middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// app.UseHttpsRedirection(); // enable if you want HTTPS locally
+// app.UseAuthentication();   // add when you wire JWT or other auth
+app.UseAuthorization();
+
+app.UseCors(allowSpa);
 
 app.MapControllers();
 

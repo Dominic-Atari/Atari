@@ -35,6 +35,9 @@ namespace Nile.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<Guid?>("ParentCommentId")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid>("PostId")
                         .HasColumnType("char(36)");
 
@@ -43,7 +46,7 @@ namespace Nile.Migrations
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("ParentCommentId");
 
                     b.HasIndex("UserId");
 
@@ -69,17 +72,21 @@ namespace Nile.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("TargetUserId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TargetUserId");
+                    b.HasIndex("RequesterUserId", "Status");
 
                     b.HasIndex("RequesterUserId", "TargetUserId")
                         .IsUnique();
+
+                    b.HasIndex("TargetUserId", "Status");
+
+                    b.HasIndex("TargetUserId", "Status", "CreatedAt");
 
                     b.ToTable("FriendRelationships", t =>
                         {
@@ -128,7 +135,7 @@ namespace Nile.Migrations
 
                     b.Property<string>("Role")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
@@ -140,7 +147,12 @@ namespace Nile.Migrations
                     b.HasIndex("GroupId", "UserId")
                         .IsUnique();
 
-                    b.ToTable("GroupMembers");
+                    b.HasIndex("GroupId", "Role", "JoinedAt");
+
+                    b.ToTable("GroupMembers", t =>
+                        {
+                            t.HasCheckConstraint("CK_GroupMember_Role", "Role IN ('admin','mod','member')");
+                        });
                 });
 
             modelBuilder.Entity("Nile.Entities.Message", b =>
@@ -149,18 +161,14 @@ namespace Nile.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("ContentText")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<Guid>("RecipientUserId")
                         .HasColumnType("char(36)");
-
-                    b.Property<DateTime?>("SeenAt")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("SenderUserId")
                         .HasColumnType("char(36)");
@@ -168,7 +176,13 @@ namespace Nile.Migrations
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.HasKey("MessageId");
+
+                    b.HasIndex("IsRead");
 
                     b.HasIndex("RecipientUserId", "CreatedAt");
 
@@ -181,6 +195,9 @@ namespace Nile.Migrations
                 {
                     b.Property<Guid>("NotificationId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("ActorUserId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -207,6 +224,8 @@ namespace Nile.Migrations
                         .HasColumnType("char(36)");
 
                     b.HasKey("NotificationId");
+
+                    b.HasIndex("ActorUserId");
 
                     b.HasIndex("UserId", "IsRead", "CreatedAt");
 
@@ -304,6 +323,11 @@ namespace Nile.Migrations
 
             modelBuilder.Entity("Nile.Entities.Comment", b =>
                 {
+                    b.HasOne("Nile.Entities.Comment", "ParentComment")
+                        .WithMany("Replies")
+                        .HasForeignKey("ParentCommentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Nile.Entities.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
@@ -315,6 +339,8 @@ namespace Nile.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("ParentComment");
 
                     b.Navigation("Post");
 
@@ -391,11 +417,18 @@ namespace Nile.Migrations
 
             modelBuilder.Entity("Nile.Entities.Notification", b =>
                 {
+                    b.HasOne("Nile.Entities.User", "ActorUser")
+                        .WithMany()
+                        .HasForeignKey("ActorUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Nile.Entities.User", "User")
                         .WithMany("Notifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ActorUser");
 
                     b.Navigation("User");
                 });
@@ -428,6 +461,11 @@ namespace Nile.Migrations
                     b.Navigation("Post");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Nile.Entities.Comment", b =>
+                {
+                    b.Navigation("Replies");
                 });
 
             modelBuilder.Entity("Nile.Entities.Group", b =>

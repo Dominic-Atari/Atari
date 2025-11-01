@@ -50,10 +50,10 @@ namespace Nile.Api.Controllers
 
         // GET /api/postlike/{postId}/recent?take=10
         [HttpGet("{postId:guid}/recent")]
-        public async Task<ActionResult<IReadOnlyList<UserLiteDto>>> Recent(Guid postId, [FromQuery] int take = 10)
+        public async Task<ActionResult<IReadOnlyList<UserLikeDto>>> Recent(Guid postId, [FromQuery] int take = 10)
         {
             var users = await _service.RecentLikersAsync(postId, take);
-            var dto = users.Select(u => new UserLiteDto
+            var dto = users.Select(u => new UserLikeDto
             {
                 UserId = u.UserId,
                 DisplayName = u.DisplayName,

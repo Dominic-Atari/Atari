@@ -9,11 +9,12 @@ namespace Nile.Entities
         public Guid SenderUserId { get; set; }
         public Guid RecipientUserId { get; set; }
 
-        public string ContentText { get; set; } = string.Empty;
+        public string Text { get; set; } = string.Empty;
+        public bool IsRead { get; set; }
 
-    public DateTime SentAt { get; set; }
-    public DateTime CreatedAt { get; set; }
-        public DateTime? SeenAt { get; set; }
+        public DateTime SentAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+
 
         // navs
         public User SenderUser { get; set; } = default!;

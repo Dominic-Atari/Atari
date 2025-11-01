@@ -4,16 +4,17 @@ namespace Nile.Repository
 {
     public interface IMessageRepository : IGenericRepository<Message>
     {
-        // Send message (store it)
-        Task AddMessageAsync(Message message);
+        Task SendAsync(Message m);
 
-        // Get full conversation between two users (sorted oldest -> newest or newest -> oldest)
-        Task<IReadOnlyList<Message>> GetConversationAsync(Guid userAId, Guid userBId, int takeLast);
+        // A <-> B thread (both directions), newest last for chat display
+        Task<IReadOnlyList<Message>> GetThreadAsync(Guid a, Guid b, int skip, int take);
 
-        // How many unread messages does a user have?
-        Task<int> GetUnreadCountAsync(Guid userId);
+        Task MarkReadAsync(Guid messageId);
 
-        // Mark messages as seen in a conversation
-        Task MarkConversationSeenAsync(Guid readerUserId, Guid otherUserId);
+        // Mark all messages from `other` to `me` as read
+        Task MarkThreadReadAsync(Guid me, Guid other);
+
+        // Optional: inbox preview (last N messages where user is sender or recipient)
+        Task<IReadOnlyList<Message>> GetInboxAsync(Guid userId, int skip, int take);
     }
 }

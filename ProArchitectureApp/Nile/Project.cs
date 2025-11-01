@@ -29,12 +29,24 @@ namespace Nile
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPostLikeRepository, PostLikeRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<Nile.Repository.GroupMemberRepository.IGroupMemberRepository, Nile.Repository.GroupMemberRepository.GroupMemberRepository>();
+            services.AddScoped<IFriendRelationshipRepository, FriendRelationshipRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+
 
             // services
             services.AddScoped<PostService>();
             services.AddScoped<UserService>();
             services.AddScoped<PostLikeService>();
-
+            services.AddScoped<NotificationService>();
+            services.AddScoped<MessageService>();
+            services.AddScoped<GroupService>();
+            services.AddScoped<FriendService>();
+            services.AddScoped<CommentService>();
+            
             return services;
         }
     }

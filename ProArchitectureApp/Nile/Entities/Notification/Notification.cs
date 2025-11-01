@@ -2,26 +2,23 @@ using System;
 
 namespace Nile.Entities
 {
+   // Nile.Entities/Notification.cs
     public class Notification
     {
-        public Guid NotificationId { get; set; }
+    public Guid NotificationId { get; set; }
 
-        // who this notification is for
-        public Guid UserId { get; set; }
+    // Recipient (who receives this notification)
+    public Guid UserId { get; set; }
+    public User User { get; set; } = default!;
 
-        // e.g. "like", "comment", "friend_request", "message"
-        public string Type { get; set; } = string.Empty;
+    // Actor/Sender (who triggered it) – nullable to allow system-generated notifications
+    public Guid? ActorUserId { get; set; }
+    public User? ActorUser { get; set; }
 
-        // Human readable text e.g. "Dominic liked your post"
-        public string Message { get; set; } = string.Empty;
-
-        // optional: something to navigate to in the app (post ID, user ID, etc.)
-        public string? ReferenceId { get; set; }
-
-        public bool IsRead { get; set; }
-        public DateTime CreatedAt { get; set; }
-
-        // nav
-        public User User { get; set; } = default!;
+    public string Type { get; set; } = string.Empty;    // "Like","Comment","FriendAccepted",...
+    public string Message { get; set; } = string.Empty; // short text the UI shows
+    public string? ReferenceId { get; set; }            // e.g., PostId/CommentId/FriendRel Id (as string)
+    public bool IsRead { get; set; }
+    public DateTime CreatedAt { get; set; }
     }
 }

@@ -67,37 +67,50 @@ namespace Nile
             // Helpful indexes
             //modelBuilder.Entity<User>().HasIndex(u => u.Email);
             // If you want uniqueness at DB level: uncomment next line
-            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email).IsUnique();
 
             //
-            // FRIEND RELATIONSHIP
-            //
-            modelBuilder.Entity<FriendRelationship>()
-                .HasKey(fr => fr.Id);
+            // ==========================
+// FRIEND RELATIONSHIP
+// ==========================
+modelBuilder.Entity<FriendRelationship>()
+    .HasKey(fr => fr.Id);
 
-            modelBuilder.Entity<FriendRelationship>()
-                .HasOne(fr => fr.RequesterUser)
-                .WithMany() // add User.SentFriendRequests if/when you want
-                .HasForeignKey(fr => fr.RequesterUserId)
-                .OnDelete(DeleteBehavior.Restrict);
+modelBuilder.Entity<FriendRelationship>()
+    .HasOne(fr => fr.RequesterUser)
+    .WithMany() // add User.SentFriendRequests later if desired
+    .HasForeignKey(fr => fr.RequesterUserId)
+    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<FriendRelationship>()
-                .HasOne(fr => fr.TargetUser)
-                .WithMany() // add User.ReceivedFriendRequests if/when you want
-                .HasForeignKey(fr => fr.TargetUserId)
-                .OnDelete(DeleteBehavior.Restrict);
+modelBuilder.Entity<FriendRelationship>()
+    .HasOne(fr => fr.TargetUser)
+    .WithMany() // add User.ReceivedFriendRequests later if desired
+    .HasForeignKey(fr => fr.TargetUserId)
+    .OnDelete(DeleteBehavior.Restrict);
 
-            // One directed row per pair, and block self-friendship
-            modelBuilder.Entity<FriendRelationship>()
-                .HasIndex(fr => new { fr.RequesterUserId, fr.TargetUserId })
-                .IsUnique();
+// One directed row per pair
+modelBuilder.Entity<FriendRelationship>()
+    .HasIndex(fr => new { fr.RequesterUserId, fr.TargetUserId })
+    .IsUnique();
 
-            modelBuilder.Entity<FriendRelationship>()
-                .ToTable(t => t.HasCheckConstraint("CK_Friend_NoSelf", "RequesterUserId <> TargetUserId"));
+// No self-requests (CHECK enforced on SQL Server/Postgres/MySQL 8+)
+modelBuilder.Entity<FriendRelationship>()
+    .ToTable(t => t.HasCheckConstraint("CK_Friend_NoSelf", "RequesterUserId <> TargetUserId"));
 
-            // Optional: constrain status values if you use a string status field
-            // modelBuilder.Entity<FriendRelationship>()
-            //     .HasCheckConstraint("CK_Friend_Status", "Status IN ('Pending','Accepted','Blocked')");
+// ---------- Helpful indexes ----------
+modelBuilder.Entity<FriendRelationship>()
+    .HasIndex(fr => new { fr.TargetUserId, fr.Status, fr.CreatedAt }); // pending inbox, newest first
+
+modelBuilder.Entity<FriendRelationship>()
+    .HasIndex(fr => new { fr.RequesterUserId, fr.Status });            // accepted scans (outbound)
+
+modelBuilder.Entity<FriendRelationship>()
+    .HasIndex(fr => new { fr.TargetUserId, fr.Status });               // accepted scans (inbound)
+
+// (Optional) constrain allowed status values at DB level
+// modelBuilder.Entity<FriendRelationship>()
+//     .HasCheckConstraint("CK_Friend_Status", "Status IN ('Pending','Accepted','Blocked')");
 
             //
             // POST
@@ -118,8 +131,10 @@ namespace Nile
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Helpful indexes
-            modelBuilder.Entity<Post>().HasIndex(p => p.UserId);
-            modelBuilder.Entity<Post>().HasIndex(p => p.CreatedAt);
+            modelBuilder.Entity<Post>()
+                .HasIndex(p => p.UserId);
+            modelBuilder.Entity<Post>()
+                .HasIndex(p => p.CreatedAt);
 
             //
             // POSTLIKE
@@ -139,30 +154,39 @@ namespace Nile
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Helpful index for "what did this user like?"
-            modelBuilder.Entity<PostLike>().HasIndex(pl => pl.UserId);
+            modelBuilder.Entity<PostLike>()
+                .HasIndex(pl => pl.UserId);
 
             //
             // COMMENT
             //
-            modelBuilder.Entity<Comment>()
-                .HasKey(c => c.CommentId);
+            // COMMENT
+modelBuilder.Entity<Comment>()
+    .HasKey(c => c.CommentId);
 
-            modelBuilder.Entity<Comment>()
-                .HasOne(c => c.User)
-                .WithMany(u => u.Comments)
-                .HasForeignKey(c => c.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+modelBuilder.Entity<Comment>()
+    .HasOne(c => c.Post)
+    .WithMany(p => p.Comments)
+    .HasForeignKey(c => c.PostId)
+    .OnDelete(DeleteBehavior.Cascade);
 
-            // Optional threaded replies (requires Comment.ParentCommentId in your entity)
-            // modelBuilder.Entity<Comment>()
-            //     .HasOne<Comment>()
-            //     .WithMany()
-            //     .HasForeignKey(c => c.ParentCommentId)
-            //     .OnDelete(DeleteBehavior.Restrict);
+modelBuilder.Entity<Comment>()
+    .HasOne(c => c.User)
+    .WithMany(u => u.Comments)
+    .HasForeignKey(c => c.UserId)
+    .OnDelete(DeleteBehavior.Restrict);
 
-            // Helpful indexes
-            modelBuilder.Entity<Comment>().HasIndex(c => c.PostId);
-            modelBuilder.Entity<Comment>().HasIndex(c => new { c.PostId, c.CreatedAt });
+// self-reference for replies
+modelBuilder.Entity<Comment>()
+    .HasOne(c => c.ParentComment)
+    .WithMany(c => c.Replies)
+    .HasForeignKey(c => c.ParentCommentId)
+    .OnDelete(DeleteBehavior.Restrict);
+
+
+// helpful indexes
+modelBuilder.Entity<Comment>().HasIndex(c => new { c.PostId, c.CreatedAt });
+modelBuilder.Entity<Comment>().HasIndex(c => c.ParentCommentId);
 
             //
             // MESSAGE
@@ -183,79 +207,103 @@ namespace Nile
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Helpful indexes
-            modelBuilder.Entity<Message>().HasIndex(m => new { m.SenderUserId, m.CreatedAt });
-            modelBuilder.Entity<Message>().HasIndex(m => new { m.RecipientUserId, m.CreatedAt });
+            modelBuilder.Entity<Message>()
+                .HasIndex(m => new { m.SenderUserId, m.CreatedAt });
+            modelBuilder.Entity<Message>()
+                .HasIndex(m => new { m.RecipientUserId, m.CreatedAt });
+            modelBuilder.Entity<Message>()
+                .HasIndex(m => m.IsRead);
 
             //
             // NOTIFICATION
             //
+           // In NileDbContext.OnModelCreating
             modelBuilder.Entity<Notification>(entity =>
             {
-                entity.HasKey(n => n.NotificationId);
+            entity.HasKey(n => n.NotificationId);
 
-                entity.HasOne(n => n.User)
-                      .WithMany(u => u.Notifications)
-                      .HasForeignKey(n => n.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
-
-                entity.Property(n => n.Type)
-                      .IsRequired()
-                      .HasMaxLength(50);
-
-                entity.Property(n => n.Message)
-                      .IsRequired()
-                      .HasMaxLength(500);
-
-                entity.Property(n => n.ReferenceId)
-                      .HasMaxLength(200);
-
-                // Optional: fast lookups by user & read status
-                entity.HasIndex(n => new { n.UserId, n.IsRead, n.CreatedAt });
-            });
-
-            //
-            // GROUP
-            //
-            modelBuilder.Entity<Group>()
-                .HasKey(g => g.GroupId);
-
-            modelBuilder.Entity<Group>()
-                .HasOne(g => g.OwnerUser)
-                .WithMany(u => u.OwnedGroups)
-                .HasForeignKey(g => g.OwnerUserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Group>()
-                .HasMany(g => g.Members)
-                .WithOne(m => m.Group)
-                .HasForeignKey(m => m.GroupId)
+    // Recipient
+            entity.HasOne(n => n.User)
+                .WithMany(u => u.Notifications)
+                .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Helpful indexes
-            modelBuilder.Entity<Group>().HasIndex(g => g.OwnerUserId);
+    // Actor/Sender (nullable)
+    entity.HasOne(n => n.ActorUser)
+          .WithMany() // you can add User.SentNotifications later if you want
+          .HasForeignKey(n => n.ActorUserId)
+          .OnDelete(DeleteBehavior.Restrict);
 
-            //
-            // GROUPMEMBER
-            //
-            modelBuilder.Entity<GroupMember>()
-                .HasKey(gm => gm.GroupMemberId);
+    entity.Property(n => n.Type).IsRequired().HasMaxLength(50);
+    entity.Property(n => n.Message).IsRequired().HasMaxLength(500);
+    entity.Property(n => n.ReferenceId).HasMaxLength(200);
 
-            modelBuilder.Entity<GroupMember>()
-                .HasOne(gm => gm.User)
-                .WithMany(u => u.GroupMemberships)
-                .HasForeignKey(gm => gm.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+    // Helpful index for inbox queries
+    entity.HasIndex(n => new { n.UserId, n.IsRead, n.CreatedAt });
 
-            modelBuilder.Entity<GroupMember>()
-                .HasOne(gm => gm.Group)
-                .WithMany(g => g.Members)
-                .HasForeignKey(gm => gm.GroupId)
-                .OnDelete(DeleteBehavior.Cascade);
+    // Optional: prevent “notify yourself” for actor-generated events
+    // (only if ActorUserId is present)
+    // entity.HasCheckConstraint("CK_Notification_ActorNotRecipient",
+    //     "(ActorUserId IS NULL) OR (ActorUserId <> UserId)");
+});
 
-            // One membership per user per group
-            modelBuilder.Entity<GroupMember>()
-                .HasIndex(gm => new { gm.GroupId, gm.UserId })
-                .IsUnique();
+
+            // ==========================
+// GROUP
+// ==========================
+modelBuilder.Entity<Group>()
+    .HasKey(g => g.GroupId);
+
+modelBuilder.Entity<Group>()
+    .HasOne(g => g.OwnerUser)
+    .WithMany(u => u.OwnedGroups)
+    .HasForeignKey(g => g.OwnerUserId)
+    .OnDelete(DeleteBehavior.Restrict);
+
+modelBuilder.Entity<Group>()
+    .HasMany(g => g.Members)
+    .WithOne(m => m.Group)
+    .HasForeignKey(m => m.GroupId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+// Helpful index for owner lookups
+modelBuilder.Entity<Group>()
+    .HasIndex(g => g.OwnerUserId);
+
+// ==========================
+// GROUP MEMBER
+// ==========================
+modelBuilder.Entity<GroupMember>()
+    .HasKey(gm => gm.GroupMemberId);
+
+modelBuilder.Entity<GroupMember>()
+    .HasOne(gm => gm.User)
+    .WithMany(u => u.GroupMemberships)
+    .HasForeignKey(gm => gm.UserId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+modelBuilder.Entity<GroupMember>()
+    .HasOne(gm => gm.Group)
+    .WithMany(g => g.Members)
+    .HasForeignKey(gm => gm.GroupId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+// One membership per user per group
+modelBuilder.Entity<GroupMember>()
+    .HasIndex(gm => new { gm.GroupId, gm.UserId })
+    .IsUnique();
+
+// Fast queries: "my groups" and roster views
+modelBuilder.Entity<GroupMember>()
+    .HasIndex(gm => gm.UserId);
+modelBuilder.Entity<GroupMember>()
+    .HasIndex(gm => new { gm.GroupId, gm.Role, gm.JoinedAt });
+
+// (Optional) constrain Role values
+// NOTE: MySQL 8+ enforces CHECK constraints; older MySQL ignores them.
+modelBuilder.Entity<GroupMember>()
+    .ToTable(t => t.HasCheckConstraint("CK_GroupMember_Role", "Role IN ('admin','mod','member')"));
+
         }
     }
 }
