@@ -11,7 +11,8 @@ namespace Nile.Entities
 
         public string ContentText { get; set; } = string.Empty;
 
-        public DateTime SentAt { get; set; }
+    public DateTime SentAt { get; set; }
+    public DateTime CreatedAt { get; set; }
         public DateTime? SeenAt { get; set; }
 
         // navs

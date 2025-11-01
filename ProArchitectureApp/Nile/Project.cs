@@ -28,10 +28,12 @@ namespace Nile
             // repositories
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPostLikeRepository, PostLikeRepository>();
 
             // services
             services.AddScoped<PostService>();
             services.AddScoped<UserService>();
+            services.AddScoped<PostLikeService>();
 
             return services;
         }

@@ -6,9 +6,7 @@ namespace Nile
     public class NileDbContext : DbContext
     {
         public NileDbContext(DbContextOptions<NileDbContext> options)
-            : base(options)
-        {
-        }
+            : base(options) { }
 
         public DbSet<User> Users { get; set; } = default!;
         public DbSet<Post> Posts { get; set; } = default!;
@@ -66,6 +64,11 @@ namespace Nile
                 .HasForeignKey(g => g.OwnerUserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Helpful indexes
+            //modelBuilder.Entity<User>().HasIndex(u => u.Email);
+            // If you want uniqueness at DB level: uncomment next line
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+
             //
             // FRIEND RELATIONSHIP
             //
@@ -74,15 +77,27 @@ namespace Nile
 
             modelBuilder.Entity<FriendRelationship>()
                 .HasOne(fr => fr.RequesterUser)
-                .WithMany() // we haven't added SentFriendRequests to User yet
+                .WithMany() // add User.SentFriendRequests if/when you want
                 .HasForeignKey(fr => fr.RequesterUserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<FriendRelationship>()
                 .HasOne(fr => fr.TargetUser)
-                .WithMany() // we haven't added ReceivedFriendRequests to User yet
+                .WithMany() // add User.ReceivedFriendRequests if/when you want
                 .HasForeignKey(fr => fr.TargetUserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // One directed row per pair, and block self-friendship
+            modelBuilder.Entity<FriendRelationship>()
+                .HasIndex(fr => new { fr.RequesterUserId, fr.TargetUserId })
+                .IsUnique();
+
+            modelBuilder.Entity<FriendRelationship>()
+                .HasCheckConstraint("CK_Friend_NoSelf", "RequesterUserId <> TargetUserId");
+
+            // Optional: constrain status values if you use a string status field
+            // modelBuilder.Entity<FriendRelationship>()
+            //     .HasCheckConstraint("CK_Friend_Status", "Status IN ('Pending','Accepted','Blocked')");
 
             //
             // POST
@@ -102,17 +117,29 @@ namespace Nile
                 .HasForeignKey(l => l.PostId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Helpful indexes
+            modelBuilder.Entity<Post>().HasIndex(p => p.UserId);
+            modelBuilder.Entity<Post>().HasIndex(p => p.CreatedAt);
+
             //
             // POSTLIKE
             //
             modelBuilder.Entity<PostLike>()
-                .HasKey(l => l.PostLikeId);
+                .HasKey(pl => pl.PostLikeId);
+
+            // Exactly one like per (Post, User)
+            modelBuilder.Entity<PostLike>()
+                .HasIndex(pl => new { pl.PostId, pl.UserId })
+                .IsUnique();
 
             modelBuilder.Entity<PostLike>()
                 .HasOne(l => l.User)
                 .WithMany(u => u.Likes)
                 .HasForeignKey(l => l.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Helpful index for "what did this user like?"
+            modelBuilder.Entity<PostLike>().HasIndex(pl => pl.UserId);
 
             //
             // COMMENT
@@ -125,6 +152,17 @@ namespace Nile
                 .WithMany(u => u.Comments)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Optional threaded replies (requires Comment.ParentCommentId in your entity)
+            // modelBuilder.Entity<Comment>()
+            //     .HasOne<Comment>()
+            //     .WithMany()
+            //     .HasForeignKey(c => c.ParentCommentId)
+            //     .OnDelete(DeleteBehavior.Restrict);
+
+            // Helpful indexes
+            modelBuilder.Entity<Comment>().HasIndex(c => c.PostId);
+            modelBuilder.Entity<Comment>().HasIndex(c => new { c.PostId, c.CreatedAt });
 
             //
             // MESSAGE
@@ -143,6 +181,10 @@ namespace Nile
                 .WithMany(u => u.MessagesReceived)
                 .HasForeignKey(m => m.RecipientUserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Helpful indexes
+            modelBuilder.Entity<Message>().HasIndex(m => new { m.SenderUserId, m.CreatedAt });
+            modelBuilder.Entity<Message>().HasIndex(m => new { m.RecipientUserId, m.CreatedAt });
 
             //
             // NOTIFICATION
@@ -166,6 +208,9 @@ namespace Nile
 
                 entity.Property(n => n.ReferenceId)
                       .HasMaxLength(200);
+
+                // Optional: fast lookups by user & read status
+                entity.HasIndex(n => new { n.UserId, n.IsRead, n.CreatedAt });
             });
 
             //
@@ -186,6 +231,9 @@ namespace Nile
                 .HasForeignKey(m => m.GroupId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Helpful indexes
+            modelBuilder.Entity<Group>().HasIndex(g => g.OwnerUserId);
+
             //
             // GROUPMEMBER
             //
@@ -203,6 +251,11 @@ namespace Nile
                 .WithMany(g => g.Members)
                 .HasForeignKey(gm => gm.GroupId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // One membership per user per group
+            modelBuilder.Entity<GroupMember>()
+                .HasIndex(gm => new { gm.GroupId, gm.UserId })
+                .IsUnique();
         }
     }
 }
