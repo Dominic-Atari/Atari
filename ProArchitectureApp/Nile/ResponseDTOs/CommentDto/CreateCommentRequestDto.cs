@@ -1,7 +1,7 @@
 // Nile.Service/Dtos/CommentDtos.cs
 namespace Nile.Service.Dtos
 {
-    public sealed class CreateCommentRequest
+    public sealed class CreateCommentRequestDto
     {
         public Guid PostId { get; set; }
         public Guid UserId { get; set; }

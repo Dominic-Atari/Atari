@@ -30,7 +30,12 @@ var allowSpa = "_allowSpa";
 builder.Services.AddCors(o => o.AddPolicy(allowSpa, p =>
     p.AllowAnyHeader()
      .AllowAnyMethod()
-     .WithOrigins("http://localhost:4200", "http://localhost:5173")));
+     .WithOrigins(
+        "http://localhost:4200", // Angular default
+        "http://localhost:4300", // our dev server
+        "http://localhost:4301", // preview static server
+        "http://localhost:5173"   // Vite default
+     )));
 
 // Pull in Nile registrations (DbContext, repos, services, etc.)
 builder.Services.AddNile(builder.Configuration);

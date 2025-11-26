@@ -14,7 +14,7 @@ namespace Nile.Api.Controllers
 
         // POST /api/comment
         [HttpPost]
-        public async Task<ActionResult<CommentDto>> Create([FromBody] CreateCommentRequest req)
+        public async Task<ActionResult<CommentDto>> Create([FromBody] CreateCommentRequestDto req)
         {
             try
             {
@@ -25,13 +25,15 @@ namespace Nile.Api.Controllers
             catch (InvalidOperationException ex) { return BadRequest(new { error = ex.Message }); }
         }
 
-        // GET /api/comment/post/{postId}?skip=0&take=50
-        [HttpGet("post/{postId:guid}")]
-        public async Task<ActionResult<IEnumerable<CommentDto>>> ForPost(Guid postId, [FromQuery] int skip = 0, [FromQuery] int take = 50)
+        // GET /api/comment/posts/{postId}/comments?skip=0&take=50
+        [HttpGet("posts/{postId:guid}/comments")]
+        public async Task<ActionResult<IEnumerable<CommentDto>>> GetCommentsOfAPost(
+            Guid postId, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
             var dto = await _service.GetForPostAsync(postId, skip, take);
             return Ok(dto);
         }
+
 
         // GET /api/comment/{commentId}/replies
         [HttpGet("{commentId:guid}/replies")]

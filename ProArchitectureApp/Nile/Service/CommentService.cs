@@ -18,7 +18,7 @@ namespace Nile.Service
             _users = users;
         }
 
-        public async Task<CommentDto> CreateAsync(CreateCommentRequest req)
+        public async Task<CommentDto> CreateAsync(CreateCommentRequestDto req)
         {
             if (string.IsNullOrWhiteSpace(req.ContentText))
                 throw new ArgumentException("Content cannot be empty.");
