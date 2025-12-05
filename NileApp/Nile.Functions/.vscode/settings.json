@@ -1,0 +1,6 @@
+{
+    "dataworkspace.excludedProjects": [
+        "master/master.sqlproj",
+        "NileDb/NileDb.sqlproj"
+    ]
+}

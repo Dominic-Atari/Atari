@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
-
+﻿using Microsoft.Extensions.Logging;
+using AutoMapper;
 namespace Nile.Accessors;
 
 internal interface IMapper

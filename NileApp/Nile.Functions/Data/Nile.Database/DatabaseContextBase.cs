@@ -26,7 +26,7 @@ public abstract class DatabaseContextBase<TContext> : DbContext
             optionsBuilder.UseSqlServer(_config.SqlServerConnectionString, sqlOptions =>
             {
                 sqlOptions.EnableRetryOnFailure(
-                    maxRetryCount: 5,
+                    maxRetryCount: 3,
                     maxRetryDelay: System.TimeSpan.FromSeconds(30),
                     errorNumbersToAdd: null);
                 sqlOptions.CommandTimeout(60);

@@ -1,0 +1,10 @@
+C:\Users\Dominic\C#.Projects\NileApp\Nile.Functions\Nile.Accessors\bin\Debug\net8.0\Nile.Accessors.deps.json
+C:\Users\Dominic\C#.Projects\NileApp\Nile.Functions\Nile.Accessors\bin\Debug\net8.0\Nile.Accessors.dll
+C:\Users\Dominic\C#.Projects\NileApp\Nile.Functions\Nile.Accessors\bin\Debug\net8.0\Nile.Accessors.pdb
+C:\Users\Dominic\C#.Projects\NileApp\Nile.Functions\Nile.Accessors\obj\Debug\net8.0\Nile.Accessors.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dominic\C#.Projects\NileApp\Nile.Functions\Nile.Accessors\obj\Debug\net8.0\Nile.Accessors.csproj.CoreCompileInputs.cache
+C:\Users\Dominic\C#.Projects\NileApp\Nile.Functions\Nile.Accessors\obj\Debug\net8.0\Nile.Accessors.sourcelink.json
+C:\Users\Dominic\C#.Projects\NileApp\Nile.Functions\Nile.Accessors\obj\Debug\net8.0\Nile.Accessors.dll
+C:\Users\Dominic\C#.Projects\NileApp\Nile.Functions\Nile.Accessors\obj\Debug\net8.0\refint\Nile.Accessors.dll
+C:\Users\Dominic\C#.Projects\NileApp\Nile.Functions\Nile.Accessors\obj\Debug\net8.0\Nile.Accessors.pdb
+C:\Users\Dominic\C#.Projects\NileApp\Nile.Functions\Nile.Accessors\obj\Debug\net8.0\ref\Nile.Accessors.dll

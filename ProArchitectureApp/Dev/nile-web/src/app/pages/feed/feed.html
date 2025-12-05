@@ -1,0 +1,34 @@
+<section class="feed">
+	<h2>Create a post</h2>
+	<form (ngSubmit)="submit()" #f="ngForm" class="create">
+		<label>
+			User ID (Guid)
+			<input name="userId" [(ngModel)]="newPost.userId" required placeholder="00000000-0000-0000-0000-000000000000" />
+		</label>
+		<label>
+			content
+			<textarea name="contentText" [(ngModel)]="newPost.contentText" rows="3" required placeholder="What's on your mind?"></textarea>
+		</label>
+		<label>
+			Media URL (optional)
+			<input name="mediaUrl" [(ngModel)]="newPost.mediaUrl" />
+		</label>
+		<button type="submit" [disabled]="!f.form.valid || saving">{{ saving ? 'Posting…' : 'Post' }}</button>
+	</form>
+
+	<h2>Recent posts</h2>
+	<p *ngIf="loading">Loading…</p>
+	<p *ngIf="!loading && posts.length === 0">No posts yet.</p>
+	<ul *ngIf="!loading && posts.length > 0">
+		<li *ngFor="let p of posts; trackBy: trackById">
+			<div class="post">
+				<div class="meta">
+					<strong>{{ p.userDisplayName || (p.userId | slice:0:8) }}</strong>
+					<span class="time">· {{ p.createdAt | date:'short' }}</span>
+				</div>
+				<div class="text">{{ p.contentText }}</div>
+				<img *ngIf="p.mediaUrl" [src]="p.mediaUrl" alt="" />
+			</div>
+		</li>
+	</ul>
+</section>
